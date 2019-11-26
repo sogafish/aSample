@@ -9,6 +9,19 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    func fadeoutAndRemove(_ view: UIView) {
+        UIView.animate(
+            withDuration: 2.0,
+            delay: 1.0,
+            animations: {
+                view.alpha = 0.0
+            },
+            completion: {(finished: Bool) in
+                view.removeFromSuperview()
+            }
+        )
+    }
 
     @IBAction func tapView(_ sender: UITapGestureRecognizer) {
         let fish = UIImageView(image: UIImage(named: "fish"))
@@ -25,14 +38,16 @@ class ViewController: UIViewController {
         self.view.addSubview(fish)
         
         UIView.animate(
-            withDuration: 1.0,
+            withDuration: 3.0,
             delay: 0,
-            options: [.curveEaseInOut,.repeat],
+            options: [.curveEaseInOut, .repeat],
             animations: {
                 fish.alpha = 1.0
                 fish.transform = .identity
             },
-            completion: nil
+            completion: {(finished: Bool) in
+                self.fadeoutAndRemove(fish)
+            }
         )
     }
 
